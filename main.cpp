@@ -1,62 +1,43 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-string nombre;
-string apellido;
-int e;
-char r;
+double ingreso(int n,int m, string c);
 
-
-void ingreso();
-void otros();
-
-int main()
-{
-
-    ingreso();
-
-    otros();
-
-    return 0;
+int main() {
+    ofstream archivo;
+    archivo.open("piramide.txt", ios::out);
+    char c;
+    if(archivo.fail()){
+        cout<<"No se encontro el archivo";
+    }
+    int a = ingreso(0, 32768, "Ingrese un nivel: "), b=a;
+    for (int i=0; b>i;i++) {
+        for (int j=0; a>j; j++) {
+            if (i%2==0) {
+                c='*';
+            }else{
+                c='-';
+            }
+            cout<< c<<" ";
+            archivo<< c<<" ";
+        }
+        cout<<endl;
+        archivo<<endl;
+        a--;
+    }
+    archivo.close();
 }
-
-
-void ingreso()
-{
-    ofstream archivoPrueba;
-    archivoPrueba.open("datos.txt", ios::app);
-   do
-    {
-        cout<<"\tIngrese el nombre: ";
-        getline(cin, nombre,'\n');
-        cout<<"\tIngrese el apellido: ";
-        getline(cin, apellido,'\n');
-        cout<<"\tIngresa la edad: ";
-        cin>>e;
-        archivoPrueba<<nombre<<" "<<apellido<<" "<<e<<"\n";
-        cout<<"Desea agregar otro contacto s/n ";
-        cin>>r;
-        cin.ignore();
-    }while(r=='s');
-    archivoPrueba.close();
-
-}
-
-void otros()
-{
-    ifstream archivoLectura("datos.txt");
-    string texto;
-    while(!archivoLectura.eof())
-    {
-        archivoLectura>>nombre>>apellido>>e;
-
-        if(!archivoLectura.eof())
-        {
-            getline(archivoLectura,texto);
-            cout<<"Nombre es: "<<nombre<<"\n";
-            cout<<"Apellido es: "<<apellido<<"\n";
-            cout<<"Edad es: "<<e<<"\n";
+double ingreso(int n,int m, string c){
+    int op=0;
+    double a;
+    while(op==0){
+        cout<<c;
+        cin>>a;
+        if(a>n && a<=m){
+            op=1;
+        }else{
+            cout<<"El valor ingresado no es correcto"<<endl;
         }
     }
-    archivoLectura.close();
+    return a;
 }
